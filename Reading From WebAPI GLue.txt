@@ -1,0 +1,11 @@
+url_dealer_api = 'https://cf.marutisuzukisubscribe.com/api/common/vehicle/model-and-variants'
+headers = {'x-api-key': 'rzEw0mlWmf3zZKkhA01VnxPrXss6rSO5YedEPpye'}
+try:
+    response = requests.get(url_dealer_api, headers=headers)
+    res_model_json = response.json()
+    model_json = res_model_json['data']
+    df_modelmasterapi = spark.createDataFrame(data=model_json)
+    df_modelmasterapi.createOrReplaceTempView('modelmasterapi')
+except Exception as e:
+    print ("Unable to prepare model master api look up table")
+    raise Exception(e)
